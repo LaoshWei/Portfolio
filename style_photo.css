@@ -47,6 +47,18 @@ body {
     object-fit: cover;
     transition: opacity 0.2s ease;
   }
+
+  .photo-item p {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .photo-item p.show {
+    opacity: 1;
+    height: auto;
+  }
   
   @media (max-width: 600px) {
     main.gallery-container {
