@@ -67,7 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 載入所有資料
   fetch(API_URL)
-    .then((res) => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error("伺服器錯誤");
+      return res.json();
+    })
     .then((data) => {
       data.forEach((entry) => addEntryToDOM(entry)); //拿到資料後，針對裡面每一筆心得，把它加到畫面上
     })
@@ -81,8 +84,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const title = document.createElement("strong");
     title.textContent = `${entry.title}（${new Date(entry.createdAt).toLocaleDateString()}）`;
 
-    const content = document.createElement("p");
-    content.textContent = entry.content;
+    const content = document.createElement("div");
+    content.className = "preview-markdown";
+    content.innerHTML = marked.parse(entry.content.slice(0, 100)) + "...";
+
+    const fullBtn = document.createElement("button");
+    fullBtn.textContent = "📖 看全文";
+    fullBtn.style.marginLeft = "0.5rem";
+    fullBtn.onclick = (e) => {
+      e.stopPropagation(); // 避免觸發 li.onclick 展開編輯按鈕
+      window.location.href = `${pageType.slice(0, -1)}-detail.html?id=${entry._id}`;
+    };
 
     const editBtn = document.createElement("button");
     editBtn.textContent = "📝 編輯";
@@ -115,10 +127,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     buttonWrapper.appendChild(editBtn);
     buttonWrapper.appendChild(deleteBtn);
+    buttonWrapper.appendChild(fullBtn);
 
     li.appendChild(title);
     li.appendChild(content);
-
     li.appendChild(buttonWrapper);
 
     li.onclick = () => {
@@ -127,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     articleList.prepend(li);
   }
+
 });
 
 

@@ -1,0 +1,92 @@
+body {
+    font-family: "Noto Sans TC", sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .reading-detail-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+  }
+  
+  #reading-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #222;
+  }
+  
+  #reading-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    white-space: pre-wrap;
+  }
+  .back-button {
+    display: inline-block;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+
+  .reading-text {
+    font-family: "Noto Sans TC", sans-serif;
+    line-height: 1.8;
+    color: #333;
+    padding: 1rem;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .reading-text h1,
+  .reading-text h2,
+  .reading-text h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .reading-text h1 { font-size: 1.8rem; }
+  .reading-text h2 { font-size: 1.5rem; }
+  .reading-text h3 { font-size: 1.25rem; }
+  
+  .reading-text p {
+    margin: 1rem 0;
+  }
+  
+  .reading-text strong {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .reading-text a {
+    color: #007acc;
+    text-decoration: underline;
+  }
+  
+  .reading-text ol,
+  .reading-text ul {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .reading-text li {
+    margin: 0.5rem 0;
+  }
+  

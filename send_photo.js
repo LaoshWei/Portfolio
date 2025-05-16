@@ -67,7 +67,10 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // 載入所有資料
     fetch(API_URL)
-      .then((res) => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("伺服器錯誤");
+        return res.json();
+      })
       .then((data) => {
         data.forEach((entry) => addEntryToDOM(entry)); //拿到資料後，針對裡面每一筆心得，把它加到畫面上
       })
@@ -95,7 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
         buttonWrapper.style.display = "none";
         buttonWrapper.style.marginTop = "0.5rem";
         buttonWrapper.style.textAlign = "center";
-    
+
+        // 🆕 新增「看全圖」按鈕
+        const viewFullBtn = document.createElement("button");
+        viewFullBtn.textContent = "📷 看全圖";
+        viewFullBtn.onclick = () => {
+          window.location.href = `photo-detail.html?id=${entry._id}`;
+        };
+
+
         const editBtn = document.createElement("button");
         editBtn.textContent = "📝 編輯";
         editBtn.style.marginRight = "0.5rem";
@@ -107,6 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     
         const deleteBtn = document.createElement("button");
+        deleteBtn.style.marginRight = "0.5rem";
         deleteBtn.textContent = "🗑️ 刪除";
         deleteBtn.onclick = async () => {
           if (!confirm("確定要刪除這張照片嗎？")) return;
@@ -122,6 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         buttonWrapper.appendChild(editBtn);
         buttonWrapper.appendChild(deleteBtn);
+        buttonWrapper.appendChild(viewFullBtn);
     
         div.appendChild(img);
         div.appendChild(caption);

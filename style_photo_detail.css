@@ -1,0 +1,40 @@
+body {
+    font-family: "Noto Sans TC", sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .photo-detail-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  .back-button {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #444;
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }
+  
+  .photo-display img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .photo-display p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: #555;
+  }
+  
