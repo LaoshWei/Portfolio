@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     try {
       console.log(pageType)
-      const res = await fetch(`https://08e65860-4676-41d2-9995-6f546fd0df3f-00-b0003azewloq.sisko.replit.dev/${pageType}/${id}`);
+      const res = await fetch(`${API_URL}/${pageType}/${id}`);
       const data = await res.json();
       const content = marked.parse(data.content);
   

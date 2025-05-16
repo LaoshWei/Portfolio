@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const contentInput = document.getElementById("entry-content");
   const articleList = document.querySelector("#article-list ul");
   const pageType = document.body.dataset.type;
-  const API_URL = `https://08e65860-4676-41d2-9995-6f546fd0df3f-00-b0003azewloq.sisko.replit.dev/${pageType}`; // ← 替換成你自己的網址！
+  const PAGE_API_URL = `${API_URL}/${pageType}`; // ← 替換成你自己的網址！
 
   let currentEditId = null;
 
@@ -32,14 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
       let response; //宣告變數：用 let（安全、區域、現代）
       if (currentEditId) {
         // 編輯模式
-        response = await fetch(`${API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行
+        response = await fetch(`${PAGE_API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行
           method: "PUT", // 這個都是HTTP內置的function
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ title, content }),
         });
       } else {
         // 新增模式
-        response = await fetch(API_URL, {
+        response = await fetch(PAGE_API_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ title, content }),
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 載入所有資料
-  fetch(API_URL)
+  fetch(PAGE_API_URL)
     .then(res => {
       if (!res.ok) throw new Error("伺服器錯誤");
       return res.json();
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     deleteBtn.onclick = async () => { // async宣告一個可以使用 await 的函式
       if (!confirm("確定要刪除這篇心得嗎？")) return;
       try {
-        const res = await fetch(`${API_URL}/${entry._id}`, { method: "DELETE" });
+        const res = await fetch(`${PAGE_API_URL}/${entry._id}`, { method: "DELETE" });
         if (!res.ok) throw new Error("刪除失敗");
         li.remove();
       } catch (err) {

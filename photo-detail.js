@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
-    const API_URL = `https://08e65860-4676-41d2-9995-6f546fd0df3f-00-b0003azewloq.sisko.replit.dev/photos/${id}`;
+    const API_URL = `${API_URL}/photos/${id}`;
   
     const img = document.getElementById("photo-image");
     const desc = document.getElementById("photo-description");
