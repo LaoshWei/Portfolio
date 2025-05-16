@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
-    const API_URL = `${API_URL}/photos/${id}`;
+    const PHOTO_API_URL = `${API_URL}/photos/${id}`;
   
     const img = document.getElementById("photo-image");
     const desc = document.getElementById("photo-description");
   
     try {
-      const res = await fetch(API_URL);
+      const res = await fetch(PHOTO_API_URL);
       if (!res.ok) throw new Error("找不到這張照片");
       const photo = await res.json();
   
