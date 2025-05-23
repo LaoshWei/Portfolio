@@ -10,7 +10,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const PHOTO_API_URL = `${API_URL}/${pageType}`; // ← 替換成你自己的網址！
   
     let currentEditId = null;
-  
+    const token = localStorage.getItem("token");
+    if (!token) {
+      document.getElementById("new-entry-btn").style.display = "none";
+    }
+
+    if (token){
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const exp = payload.exp * 1000; // 轉成毫秒
+      const now = Date.now();
+
+      if (now > exp) {
+        localStorage.removeItem("token");
+        alert("登入已過期，請重新登入");
+        window.location.href = "login.html";
+      }
+    }
+
+
     // 切換表單顯示
     newBtn.addEventListener("click", () => {
       form.style.display = form.style.display === "none" ? "block" : "none";
@@ -31,17 +48,24 @@ document.addEventListener("DOMContentLoaded", function () {
       try {
         let response; //宣告變數：用 let（安全、區域、現代）
         if (currentEditId) {
+          const token = localStorage.getItem("token");
           // 編輯模式
           response = await fetch(`${PHOTO_API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行
             method: "PUT", // 這個都是HTTP內置的function
-            headers: { "Content-Type": "application/json" },
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+            },
             body: JSON.stringify({ title, content }),
           });
         } else {
           // 新增模式
           response = await fetch(PHOTO_API_URL, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+            },
             body: JSON.stringify({ title, content }),
           });
         }
@@ -123,7 +147,13 @@ document.addEventListener("DOMContentLoaded", function () {
         deleteBtn.onclick = async () => {
           if (!confirm("確定要刪除這張照片嗎？")) return;
           try {
-            const res = await fetch(`${PHOTO_API_URL}/${entry._id}`, { method: "DELETE" });
+            const token = localStorage.getItem("token");
+            const res = await fetch(`${PHOTO_API_URL}/${entry._id}`, {
+              method: "DELETE",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+              },
+            });
             if (!res.ok) throw new Error("刪除失敗");
             div.remove();
           } catch (err) {
@@ -131,7 +161,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error(err);
           }
         };
-    
+        if (!token) {
+          deleteBtn.style.display = "none";
+          editBtn.style.display = "none";
+        }
         buttonWrapper.appendChild(editBtn);
         buttonWrapper.appendChild(deleteBtn);
         buttonWrapper.appendChild(viewFullBtn);

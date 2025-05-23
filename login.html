@@ -1,0 +1,57 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>登入頁面</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #fdfdfd;
+      color: #333;
+      max-width: 400px;
+      margin: auto;
+    }
+    input, button {
+      display: block;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>登入後才能編輯/新增資料</h2>
+  <input type="text" id="username" placeholder="帳號">
+  <input type="password" id="password" placeholder="密碼">
+  <button id="login-btn">登入</button>
+  <p id="status" style="color: red;"></p>
+
+  <script src="config.js"></script>
+  <script>
+    document.getElementById("login-btn").addEventListener("click", async () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        document.getElementById("status").textContent = result.error || "登入失敗";
+        return;
+      }
+
+      // 存入 token
+      localStorage.setItem("token", result.token);
+      alert("✅ 登入成功！");
+      window.location.href = "reading.html"; // 可改成其他主頁
+    });
+  </script>
+</body>
+</html>
