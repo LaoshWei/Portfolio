@@ -44,7 +44,7 @@ color: #0077cc;
 .hero {
 text-align: center;
 padding: 4rem 2rem;
-background: linear-gradient(to right, #fceabb, #f8b500);
+background: linear-gradient(to right, #bbe3fc, #005ff8);
 color: #fff;
 }
 
@@ -99,7 +99,7 @@ font-size: 2rem;
   margin-bottom: 1rem;
   padding: 1rem;
   background-color: #fff;
-  border-left: 4px solid #f8b500;
+  border-left: 4px solid #0067f8;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   transition: background-color 0.3s;
 }
@@ -175,4 +175,18 @@ footer {
   color: #666;
   line-height: 1.5;
   margin: 0;
+}
+
+#hashtag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px;
+  border: 1px solid #ccc;
+}
+.tag {
+  background-color: #e0e0e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
 }

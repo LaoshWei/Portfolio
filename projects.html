@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>作品集 | 廷宇 Patrick</title>
+  <!-- 引用全站共用的 CSS（例如 navbar、全域樣式）-->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- 引入專屬此頁的 CSS -->
+  <link rel="stylesheet" href="css\style_projects.css" />
+  <script src="js\config.js"></script>
+  <script defer src="js\logout.js"></script>
+  <script defer src="js\project.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="js\UpdateHashTag.js"></script>
+</head>
+<body data-type="projects">
+  <!-- 共用的 header + navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">廷宇 Patrick</div>
+      <ul class="nav-links">
+      <li><a href="index.html">主頁</a></li>
+      <li><a href="reading.html">閱讀</a></li>
+      <li><a href="learning.html">學習</a></li>
+      <li><a href="photo.html">攝影</a></li>
+      <li><a href="#">專題</a></li>
+      <li><a href="#">關於我</a></li>
+      <li id="auth-link"><a href="login.html">登入</a></li>
+      </ul>
+    </nav>
+  </header>
+<!-- projects.html 中的主要區段（只示範卡片區塊） -->
+<main class="projects-container">
+  <section>
+    <button id="new-entry-btn">＋ 新增專案</button>
+    <div id="entry-form" style="display:none; margin-top: 1rem;">
+      <input type="text" id="entry-title" placeholder="專案標題" style="width:100%; padding:0.5rem; margin-bottom:0.5rem;" />
+      <textarea id="entry-content" placeholder="專案內容..." style="width:100%; padding:0.5rem; height:120px;"></textarea>
+      <div id="hashtag-container">
+        <input type="text" id="hashtag-input" placeholder="HashTags 輸入後按 Enter" />
+      </div>
+      <button id="submit-entry">送出</button>
+    </div>
+    <input type="hidden" name="hashtags" id="hidden-hashtags" />
+    
+  </section>
+  <h1>我的專案作品集</h1>
+  <div class="projects-grid" id="projects-grid">
+    <!-- 範例卡片 A -->
+    <div class="project-card">
+      <a href="https://github.com/LaoshWei/Portfolio" target="_blank">
+        <img src="https://via.placeholder.com/300x200?text=專案A" alt="專案A 縮圖" />
+      </a>
+      <div class="project-info">
+        <!-- 1. 標題 -->
+        <h3>專案 A：個人作品集範本</h3>
+        <!-- 2. 內容 / 簡短描述 -->
+        <p>這是一個用純 HTML/CSS/JS 打造的作品集範本，包含 navbar、卡片式排版、後端串接功能。</p>
+        <!-- 3. Hashtags -->
+        <div class="project-hashtags">
+          <span class="hashtag">#HTML</span>
+          <span class="hashtag">#CSS</span>
+          <span class="hashtag">#JavaScript</span>
+          <span class="hashtag">#Portfolio</span>
+        </div>
+        <!-- 連結按鈕 -->
+        <a class="project-link" href="https://github.com/LaoshWei/Portfolio" target="_blank">查看 GitHub →</a>
+      </div>
+    </div>
+
+    <!-- 範例卡片 B -->
+    <div class="project-card">
+      <a href="https://08e65860-4676-41d2-9995-6f546fd0df3f-00-b0003azewloq.sisko.replit.dev" target="_blank">
+        <img src="https://via.placeholder.com/300x200?text=專案B" alt="專案B 縮圖" />
+      </a>
+      <div class="project-info">
+        <h3>專案 B：後端 CRUD API 範例</h3>
+        <p>使用 Node.js + Express + MongoDB 打造完備的 CRUD API，包含閱讀/學習/照片管理，並部署於 Replit。</p>
+        <div class="project-hashtags">
+          <span class="hashtag">#Node.js</span>
+          <span class="hashtag">#Express</span>
+          <span class="hashtag">#MongoDB</span>
+          <span class="hashtag">#Replit</span>
+        </div>
+        <a class="project-link" href="https://08e65860-4676-41d2-9995-6f546fd0df3f-00-b0003azewloq.sisko.replit.dev" target="_blank">線上 Demo →</a>
+      </div>
+    </div>
+
+    <!-- 依此模式可繼續新增更多專案卡片 -->
+  </div>
+</main>

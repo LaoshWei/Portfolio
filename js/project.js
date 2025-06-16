@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("submit-entry");
   const titleInput = document.getElementById("entry-title");
   const contentInput = document.getElementById("entry-content");
-  const articleList = document.querySelector("#article-list ul");
+  const pjlist =  document.getElementById("projects-grid")
+//   const articleList = document.querySelector("#article-list ul");
   const pageType = document.body.dataset.type;
   const PAGE_API_URL = `${API_URL}/${pageType}`; // ← 替換成你自己的網址！
 
@@ -38,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
   submitBtn.addEventListener("click", async () => {
     const title = titleInput.value.trim();
     const content = contentInput.value.trim();
+    const hashtag = document.getElementById("hidden-hashtags").value
     if (!title || !content) {
       alert("請填寫完整標題與內容。");
       return;
@@ -46,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       let response; //宣告變數：用 let（安全、區域、現代）
       const token = localStorage.getItem("token");
+      console.log("123");
       if (currentEditId) {
         // 編輯模式
         response = await fetch(`${API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行Add commentMore actions
@@ -54,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
           },
-          body: JSON.stringify({ title, content }),
+          body: JSON.stringify({ title, content, hashtag }),
         });
 
       } else {
@@ -65,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
           },
-          body: JSON.stringify({ title, content }),
+          body: JSON.stringify({ title, content, hashtag }),
         });
       }
 
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error(err);
     }
   });
-
+  console.log(PAGE_API_URL);
   // 載入所有資料
   fetch(PAGE_API_URL)
     .then(res => {
@@ -101,15 +104,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 顯示在畫面上
   function addEntryToDOM(entry) {
-    const li = document.createElement("li"); //創造list
-    li.id = `entry-${entry._id}`;
+    const pjcard = document.createElement("div");
+    pjcard.className = "project-card"
 
-    const title = document.createElement("strong");
+    // const li = document.createElement("li"); //創造list
+    // li.id = `entry-${entry._id}`;
+
+    const title = document.createElement("h3");
     title.textContent = `${entry.title}（${new Date(entry.createdAt).toLocaleDateString()}）`;
 
-    const content = document.createElement("div");
+    const content = document.createElement("p");
     content.className = "preview-markdown";
     content.innerHTML = marked.parse(entry.content.slice(0, 100)) + "...";
+
+    // 將 hashtag 陣列轉成一段 HTML 字串
+    console.log(entry.hashtag);
+    const hashtagsHTML = JSON.parse(entry.hashtag)
+    .map(tag => `<span class="hashtag">#${tag}</span>`)
+    .join("");
+
+    const pjhstags = document.createElement("div");
+    pjhstags.innerHTML = hashtagsHTML;
 
     const fullBtn = document.createElement("button");
     fullBtn.textContent = "📖 看全文";
@@ -128,11 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
       contentInput.value = entry.content;
       currentEditId = entry._id;
     };
-
-
-    const buttonWrapper = document.createElement("div");
-    buttonWrapper.style.display = "none";
-    buttonWrapper.style.marginTop = "0.5rem";
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️ 刪除";
@@ -154,6 +164,12 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
+    const buttonWrapper = document.createElement("div");
+    buttonWrapper.style.display = "none";
+    buttonWrapper.style.marginTop = "0.5rem";
+
+    
+
 
     if (!token) {
       deleteBtn.style.display = "none";
@@ -164,15 +180,16 @@ document.addEventListener("DOMContentLoaded", function () {
     buttonWrapper.appendChild(deleteBtn);
     buttonWrapper.appendChild(fullBtn);
 
-    li.appendChild(title);
-    li.appendChild(content);
-    li.appendChild(buttonWrapper);
+    pjcard.appendChild(title);
+    pjcard.appendChild(content);
+    pjcard.appendChild(pjhstags);
+    pjcard.appendChild(buttonWrapper);
 
-    li.onclick = () => {
+    pjcard.onclick = () => {
       buttonWrapper.style.display = buttonWrapper.style.display === "none" ? "block" : "none";
     };
-
-    articleList.prepend(li);
+    pjlist.prepend(pjcard);
+    // articleList.prepend(pjcard);
   }
 
 });
