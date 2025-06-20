@@ -32,5 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         hiddenInput.value = JSON.stringify(tags);
     }
-    
+    window.tags = tags;
+    window.updateTags = updateTags;
 });

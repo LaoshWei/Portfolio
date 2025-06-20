@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("123");
       if (currentEditId) {
         // 編輯模式
-        response = await fetch(`${API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行Add commentMore actions
+        response = await fetch(`${PAGE_API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行Add commentMore actions
           method: "PUT", // 這個都是HTTP內置的function
           headers: {
             "Content-Type": "application/json",
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function addEntryToDOM(entry) {
     const pjcard = document.createElement("div");
     pjcard.className = "project-card"
-
+    pjcard.id = `entry-${entry._id}`; // ✅ 加上 ID，供更新後找得到
     // const li = document.createElement("li"); //創造list
     // li.id = `entry-${entry._id}`;
 
@@ -142,6 +142,15 @@ document.addEventListener("DOMContentLoaded", function () {
       titleInput.value = entry.title;
       contentInput.value = entry.content;
       currentEditId = entry._id;
+
+      // ⭐ 新增這段
+      tags.length = 0;
+      const parsedTags = typeof entry.hashtag === "string"
+        ? JSON.parse(entry.hashtag)
+        : entry.hashtag;
+
+      parsedTags.forEach(tag => tags.push(tag));
+      updateTags();
     };
 
     const deleteBtn = document.createElement("button");
@@ -157,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
           },
         });
         if (!res.ok) throw new Error("刪除失敗");
-        li.remove();
+        pjcard.remove();
       } catch (err) {
         alert("刪除失敗");
         console.error(err);

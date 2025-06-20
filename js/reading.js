@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const token = localStorage.getItem("token");
       if (currentEditId) {
         // 編輯模式
-        response = await fetch(`${API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行Add commentMore actions
+        response = await fetch(`${PAGE_API_URL}/${currentEditId}`, { // await就是後面function結束我再繼續運行Add commentMore actions
           method: "PUT", // 這個都是HTTP內置的function
           headers: {
             "Content-Type": "application/json",
